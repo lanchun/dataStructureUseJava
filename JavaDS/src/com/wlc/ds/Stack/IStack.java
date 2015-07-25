@@ -1,4 +1,4 @@
-package com.wlc.ds.Stack;
+package com.wlc.ds.stack;
 
 /**
  * 栈接口

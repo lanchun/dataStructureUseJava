@@ -1,10 +1,11 @@
-package com.wlc.ds.LinkedList;
+package com.wlc.ds.linkedList;
 
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.wlc.ds.Node;
+import com.wlc.ds.linkedList.SimpleLinkedList;
 
 public class SimpleLinkedListTest {
 

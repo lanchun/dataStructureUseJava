@@ -1,4 +1,4 @@
-package com.wlc.ds.LinkedList;
+package com.wlc.ds.linkedList;
 
 import java.util.HashSet;
 import java.util.Set;

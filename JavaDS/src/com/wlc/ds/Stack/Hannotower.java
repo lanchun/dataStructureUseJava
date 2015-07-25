@@ -1,4 +1,4 @@
-package com.wlc.ds.Stack;
+package com.wlc.ds.stack;
 
 public class Hannotower {
 	public SimpleStack<Integer> disks;

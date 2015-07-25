@@ -1,4 +1,4 @@
-package com.wlc.ds.Stack;
+package com.wlc.ds.stack;
 
 import com.wlc.ds.Node;
 
