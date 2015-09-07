@@ -12,6 +12,10 @@ public class OptimizedInsertSortTest {
 	public void testSort() {
 		new OptimizedInsertSort().sort(array);
 		System.out.println(Arrays.toString(array));
+		
+		int[] a = {1,2,3,5,6,7,8};
+		
+		System.out.println(new OptimizedInsertSort().getIndexByBinarySearch(a, 7, 0));
 	}
 
 }

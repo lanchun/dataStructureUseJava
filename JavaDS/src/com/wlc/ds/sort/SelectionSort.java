@@ -21,7 +21,7 @@ public class SelectionSort implements ISort {
 					indexOfMin=j;
 				}
 			}
-			if(array[i] != min){
+			if(indexOfMin != i){
 				array[indexOfMin] = array[i];
 				array[i] = min;
 			}

@@ -16,7 +16,7 @@ public class InsertSort implements ISort {
 			int temp = array[i];
 			/**
 			 * 将当前元素和已排序的元素从后向前比较，如果小于则将已排序序列向后移动一个位置，
-			 * 直至找到合适的位置
+			 * 直至找到合适的位置(边比较边腾出位置，等比较完了，位置也腾出来了)
 			 */
 			while (j >= 0 && temp < array[j]) {
 				array[j + 1] = array[j];
@@ -24,7 +24,7 @@ public class InsertSort implements ISort {
 			}
 			/**如果发生了移动，将当前元素插入到已排序序列的合适位置上
 			 */
-			if (j != i+1)
+			if (j != i-1)
 				array[j + 1] = temp;
 		}
 	}

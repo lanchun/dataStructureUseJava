@@ -2,7 +2,7 @@ package com.wlc.ds.sort;
 
 /**
  * 归并排序
- * 将数组分成两组，如果这两组是有序的，则可以很快的进行归并排序，因此
+ * 将数组分成两组，如果这两组是有序的，则可以很快的进行归并排序，
  * 可以继续将数组划分，直到数组中只有一个元素的时候，我们认为它是有序的<br>
  * 
  * 时间复杂度: 平均情况与最差情况都是O(nlog(n))<br>
@@ -40,6 +40,7 @@ public class MergeSort implements ISort{
 		}
 
 		for (int x = 0; x < k; x++) {
+			//再把放回原数组 段 [first,last]
 			array[first + x] = temp[x];
 		}
 	}
