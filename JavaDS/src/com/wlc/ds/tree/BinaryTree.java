@@ -1,7 +1,8 @@
 package com.wlc.ds.tree;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -9,9 +10,9 @@ import java.util.Stack;
 
 public class BinaryTree {
 
-	public BinaryTreeNode root;
+	public TreeNode root;
 
-	private int size(BinaryTreeNode node) {
+	private int size(TreeNode node) {
 		if (node == null)
 			return 0;
 		return size(node.leftChild) + size(node.rightChild) + 1;
@@ -22,7 +23,7 @@ public class BinaryTree {
 		return size(root);
 	}
 
-	private int height(BinaryTreeNode node) {
+	private int height(TreeNode node) {
 		if (node == null)
 			return 0;
 		return Math.max(height(node.leftChild), height(node.rightChild)) + 1;
@@ -38,7 +39,7 @@ public class BinaryTree {
 		preOrder(root);
 	}
 
-	private void preOrder(BinaryTreeNode node) {
+	private void preOrder(TreeNode node) {
 		if (node != null) {
 			visit(node);
 			preOrder(node.leftChild);
@@ -46,7 +47,7 @@ public class BinaryTree {
 		}
 	}
 
-	public void visit(BinaryTreeNode node) {
+	public void visit(TreeNode node) {
 		System.out.print(node.data + " ");
 	}
 
@@ -56,11 +57,11 @@ public class BinaryTree {
 	public void levelOrder() {
 		if (root == null)
 			return;
-		BinaryTreeNode node = root;
-		Queue<BinaryTreeNode> s = new LinkedList<>();
+		TreeNode node = root;
+		Queue<TreeNode> s = new LinkedList<>();
 		s.add(node);
 		while (!s.isEmpty()) {
-			BinaryTreeNode n = s.poll();
+			TreeNode n = s.poll();
 
 			if (n.leftChild != null)
 				s.add(n.leftChild);
@@ -78,7 +79,7 @@ public class BinaryTree {
 		return getNodesNum(root, k);
 	}
 
-	public int getNodesNum(BinaryTreeNode node, int k) {
+	public int getNodesNum(TreeNode node, int k) {
 		if (node == null || k <= 0)
 			return 0;
 		if (k == 1) {
@@ -93,7 +94,7 @@ public class BinaryTree {
 		return getLeafNum(root);
 	}
 
-	public int getLeafNum(BinaryTreeNode node) {
+	public int getLeafNum(TreeNode node) {
 		if (node == null) {
 			return 0;
 		}
@@ -103,7 +104,7 @@ public class BinaryTree {
 	}
 
 	/* 判断两棵树结构是否相同 */
-	public boolean isSameTree(BinaryTreeNode node1, BinaryTreeNode node2) {
+	public boolean isSameTree(TreeNode node1, TreeNode node2) {
 		if ((node1 == null && node2 != null)
 				|| (node1 != null && node2 == null))
 			return false;
@@ -116,9 +117,9 @@ public class BinaryTree {
 	}
 
 	/* 中序遍历的非递归实现 */
-	public void inOrder(BinaryTreeNode node) {
-		Stack<BinaryTreeNode> stack = new Stack<>();
-		BinaryTreeNode temp = node;
+	public void inOrder(TreeNode node) {
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode temp = node;
 		while (temp != null || !stack.isEmpty()) {
 			while (temp != null) {
 				stack.add(temp);
@@ -135,10 +136,10 @@ public class BinaryTree {
 	/*
 	 * 将二叉查找树转变成双向链表 二叉排序树的中序遍历有序
 	 */
-	public void toDeLinkList(BinaryTreeNode node, BinaryTreeNode first,
-			BinaryTreeNode last) {
-		Stack<BinaryTreeNode> stack = new Stack<>();
-		BinaryTreeNode temp = node;
+	public void toDeLinkList(TreeNode node, TreeNode first,
+			TreeNode last) {
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode temp = node;
 		while (temp != null || !stack.isEmpty()) {
 			while (temp != null) {
 				stack.add(temp);
@@ -163,7 +164,7 @@ public class BinaryTree {
 	}
 
 	/* 判断一个二叉树是不是平衡二叉树 */
-	public boolean isAVL(BinaryTreeNode node) {
+	public boolean isAVL(TreeNode node) {
 		if (node == null)
 			return true;
 		if (Math.abs(height(node.leftChild) - height(node.rightChild)) > 1)
@@ -171,48 +172,16 @@ public class BinaryTree {
 		return isAVL(node.leftChild) && isAVL(node.rightChild);
 	}
 
-	/*
-	 * 返回两个节点的最低公共祖先 解法1：如果一个在左子树，一个在右子树，那么node就是公共结点 如果都在左（右）子树，那么递归到左（右）子树
-	 * 解法2：从根节点分别遍历到n1和n2，使用list来保存两条路径，再依次逆序比较两条路径， 第一个相同的结点就是最近的公共结点
-	 */
-	public BinaryTreeNode getNearestAncestor(BinaryTreeNode node,
-			BinaryTreeNode n1, BinaryTreeNode n2) {
-		if (node == null || n1 == null || n2 == null)
-			return null;
-		if (findNode(node.leftChild, n1) && findNode(node.rightChild, n2))
-			return node;
-		else if (findNode(node.leftChild, n1) && findNode(node.leftChild, n2))
-			return getNearestAncestor(node.leftChild, n1, n2);
-		else if (findNode(node.rightChild, n1) && findNode(node.rightChild, n2))
-			return getNearestAncestor(node.rightChild, n1, n2);
-		else
-			return null;
-	}
-
-	/*
-	 * 在node子树中查找toFind结点,找到返回true，否则返回false
-	 */
-	public boolean findNode(BinaryTreeNode node, BinaryTreeNode toFind) {
-		if (node == null || toFind == null) {
-			return false;
-		}
-		if (node == toFind)
-			return true;
-		boolean isFind = findNode(node.leftChild, toFind);
-		if (!isFind) {
-			isFind = findNode(node.rightChild, toFind);
-		}
-		return isFind;
-	}
+	
 
 	/* 判断二叉树是不是完全二叉树 */
-	public boolean isCompleteTree(BinaryTreeNode node){
+	public boolean isCompleteTree(TreeNode node){
 		if(node == null)
 			return false;
-		Queue<BinaryTreeNode> queue = new LinkedList<>();
+		Queue<TreeNode> queue = new LinkedList<>();
 		queue.add(node);
 		while(!queue.isEmpty()){
-			BinaryTreeNode n = queue.poll();
+			TreeNode n = queue.poll();
 			if(n.leftChild != null){
 				queue.add(n.leftChild);
 			}else{
@@ -225,7 +194,7 @@ public class BinaryTree {
 			}
 		}
 		while(!queue.isEmpty()){
-			BinaryTreeNode n = queue.poll();
+			TreeNode n = queue.poll();
 			if(n.leftChild != null || n.rightChild == null)
 				return false;
 		}
@@ -236,11 +205,11 @@ public class BinaryTree {
 	 * 采用递归实现
 	 * 前序遍历的第一个是根节点，中序遍历根节点左边的是左子树，右边是右子树
 	 * */
-	public BinaryTreeNode reBuild(int[] pre,int[] in,int nodeNum){
+	public TreeNode reBuild(int[] pre,int[] in,int nodeNum){
 		if(pre == null || in == null || nodeNum <= 0){
 			return null;
 		}
-		BinaryTreeNode node = new BinaryTreeNode();
+		TreeNode node = new TreeNode();
 		node.data = pre[0];
 		node.leftChild = node.rightChild = null;
 		int position = -1;
@@ -265,12 +234,12 @@ public class BinaryTree {
 	}
 	
 	
-	/* 二叉树中路径和为某个值的所有路径 
+	/* 打印二叉树中路径和为某个值的所有路径 
 	 * 用一个临时变量保存current当前的结点和，当current和num相等，并且当前结点是叶子结点的时候，说明
 	 * 找到了一条路径，就打印出来
 	 * */
-	public void getSumPath(BinaryTreeNode node, int current, int num,
-			Stack<BinaryTreeNode> s) {
+	public void getSumPath(TreeNode node, int current, int num,
+			Stack<TreeNode> s) {
 		if (node == null || node.data > num) {
 			return;
 		}
@@ -281,7 +250,7 @@ public class BinaryTree {
 
 		if ((current == num) && isLeaf) {
 			System.out.println("find a path:");
-			for (BinaryTreeNode n : s) {
+			for (TreeNode n : s) {
 				System.out.print(n.data + " ");
 			}
 			System.out.println();
@@ -296,4 +265,66 @@ public class BinaryTree {
 		current -= node.data;
 		s.pop();
 	}
+	
+	/**
+	 * 将有序数组转换为一个高度最小的二叉查找树
+	 * 每次取数组的中间值作为根节点
+	 */
+	static TreeNode createMinBST(int[] arr,int start,int end){
+		if(start <= end){
+			int mid = (start+end)>>>1;
+		System.out.println(mid);
+			TreeNode root = new TreeNode(arr[mid]);
+			root.leftChild = createMinBST(arr, start, mid-1);
+			root.rightChild = createMinBST(arr, mid+1, end);
+			return root;
+		}
+		return null;
+	}
+	
+	static TreeNode createMinBST(int[] arr){
+		return createMinBST(arr, 0, arr.length-1);
+	}
+	
+	/**
+	 * 求二叉树的宽度
+	 * 对二叉树进行层次遍历，使用temp保存每一层的结点数
+	 * num保存下一层的结点数，levelNodesNum为上一层的结点数，每出队列一个结点，levelNodesNum减1，
+	 * 直到为0，num累加停止，num即为下一层的结点数，存到temp中
+	 * 最后返回temp中最大的即为树的宽度
+	 */
+	public static int getTreeWidth(TreeNode root){
+		if(root == null)
+			return 0;
+		List<Integer> temp = new ArrayList<>();
+		Queue<TreeNode> q = new LinkedList<>();
+		q.offer(root);
+		temp.add(1);
+		int levelNodesNum = 1;
+		int num = 0;
+		
+		while(!q.isEmpty()){
+			TreeNode node = q.poll();
+			if(levelNodesNum > 0){
+				levelNodesNum--;
+			}else{
+				levelNodesNum = num;
+				num = 0;
+				temp.add(levelNodesNum);
+			}
+			
+			if(node.leftChild != null){
+				num++;
+				q.offer(node.leftChild);
+			}
+			if(node.rightChild != null){
+				num++;
+				q.offer(node.rightChild);
+			}
+		}
+		
+		return Collections.max(temp);
+	}
+	
+	
 }

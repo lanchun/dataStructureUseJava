@@ -9,24 +9,39 @@ public class BinaryTreeTest {
 
 	public BinaryTree create() {
 
-		BinaryTreeNode[] nodes = new BinaryTreeNode[5];
+		TreeNode[] nodes = new TreeNode[9];
 
-		for (int i = 0; i < 5; i++) {
-			nodes[i] = new BinaryTreeNode(i);
+		for (int i = 0; i < 9; i++) {
+			nodes[i] = new TreeNode(i);
 		}
-		BinaryTreeNode nn = new BinaryTreeNode(5);
 
 		BinaryTree tree = new BinaryTree();
 		tree.root = nodes[0];
 		nodes[0].leftChild = nodes[1];
 		nodes[0].rightChild = nodes[2];
-		nodes[2].leftChild = nn;
 		nodes[1].leftChild = nodes[3];
 		nodes[1].rightChild = nodes[4];
+		nodes[2].leftChild = nodes[5];
+		nodes[2].rightChild = nodes[6];
+		nodes[5].leftChild = nodes[7];
+		nodes[5].rightChild = nodes[8];
 		return tree;
-
+		
 	}
 
+	public TreeNode creatTree(){
+		TreeNode root = new TreeNode(10);
+		TreeNode n1 = new TreeNode(15);
+		TreeNode n2 = new TreeNode(12);
+		TreeNode n3 = new TreeNode(4);
+		TreeNode n4 = new TreeNode(7);
+		root.leftChild = n1;
+		root.rightChild = n2;
+		n1.leftChild = n3;
+		n1.rightChild = n4;
+		return root;
+	}
+	
 	BinaryTree tree = create();
 
 	@Test
@@ -59,7 +74,7 @@ public class BinaryTreeTest {
 
 	@Test
 	public void testToDeLinkList() {
-		BinaryTreeNode first = null, last = null;
+		TreeNode first = null, last = null;
 		tree.toDeLinkList(tree.root, first, last);
 	}
 
@@ -70,12 +85,27 @@ public class BinaryTreeTest {
 
 	@Test
 	public void testgetSumPath() {
-		Stack<BinaryTreeNode> s = new Stack<>();
-		tree.getSumPath(tree.root, 0, 5, s);
+		Stack<TreeNode> s = new Stack<>();
+		//tree.getSumPath(tree.root, 0, 5, s);
+		TreeNode root = creatTree();
+		tree.getSumPath(root, 0, 22, s);
 	}
 	
 	@Test
 	public void testIsCompleteTree(){
 		Assert.assertEquals(true, tree.isCompleteTree(tree.root));
 	}
+	
+	@Test
+	public void testCreateMinBST(){
+		int[] arr = {1,2,3,4,5,6,7,8,9};
+		TreeNode root = BinaryTree.createMinBST(arr);
+		tree.inOrder(root);
+	}
+	
+	@Test
+	public void testGetTreeWidth(){
+		System.out.println(BinaryTree.getTreeWidth(tree.root));
+	}
+	
 }
